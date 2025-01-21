@@ -36,9 +36,6 @@ int d2h(char * intchar, char * hexa) {
             hexa[i] = hx[reste];
             i++;
         }
-        // Si le reste est égal à 0
-        if (reste == 0)
-            reste += 1;
         // On ajoute la dernière valeur héxadécimale
         if ((i == 1 && quotient != 0) || i > 1)
             hexa[i] = hx[quotient];
