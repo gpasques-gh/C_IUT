@@ -17,10 +17,12 @@ int d2h(char * intchar, char * hexa) {
         return 0;
     } else { // Si le format est valide
         // Variables
-        char hx[18] = "01234567889ABCDEF"; // Characters hexadécimaux
+        char hx[16] = "0123456789ABCDEF"; // Characters hexadécimaux
         int i = 0; // Indice de la chaine
         int reste = entier % 16; // Reste de la division
         int quotient = entier / 16; // Division entière
+        printf("reste : %d\n", reste);
+        printf("quotient : %d\n", quotient);
         // Entrée de la valeur hexadécimale dans la chaîne
         hexa[i] = hx[reste];
         i++;
@@ -29,15 +31,17 @@ int d2h(char * intchar, char * hexa) {
             // On réitère l'opération
             reste = quotient % 16;
             quotient = quotient / 16;
+            printf("reste : %d\n", reste);
+            printf("quotient : %d\n", quotient);
             hexa[i] = hx[reste];
             i++;
         }
         // Si le reste est égal à 0
-        if (reste == 0) {
+        if (reste == 0)
             reste += 1;
-        }
         // On ajoute la dernière valeur héxadécimale
-        hexa[i] = hx[reste];
+        if ((i == 1 && quotient != 0) || i > 1)
+            hexa[i] = hx[quotient];
         // On retourne la chaîne
         strrev(hexa);
         // On sort de la fonction en renvoyant 1
