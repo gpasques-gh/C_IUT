@@ -21,8 +21,6 @@ int d2h(char * intchar, char * hexa) {
         int i = 0; // Indice de la chaine
         int reste = entier % 16; // Reste de la division
         int quotient = entier / 16; // Division entière
-        printf("reste : %d\n", reste);
-        printf("quotient : %d\n", quotient);
         // Entrée de la valeur hexadécimale dans la chaîne
         hexa[i] = hx[reste];
         i++;
@@ -31,8 +29,6 @@ int d2h(char * intchar, char * hexa) {
             // On réitère l'opération
             reste = quotient % 16;
             quotient = quotient / 16;
-            printf("reste : %d\n", reste);
-            printf("quotient : %d\n", quotient);
             hexa[i] = hx[reste];
             i++;
         }
