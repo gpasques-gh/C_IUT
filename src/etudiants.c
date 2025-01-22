@@ -58,9 +58,8 @@ void scanClasseMarqueur(struct etudiant* classe)
             etu.identifiant == 0 &&
             etu.notes[0] == 0 &&
             etu.notes[1] == 0 &&
-            etu.notes[2] == 0) {
+            etu.notes[2] == 0) 
                 fin = true; // Si oui la boucle est finie
-            }
         // Si la boucle n'est pas finie on ajoute l'étudiant à la classe
         if (!fin) {
             classe[i] = etu;
