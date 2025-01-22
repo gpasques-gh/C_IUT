@@ -31,7 +31,7 @@ int main() {
     // *pAge (hors d'une déclaration de variable) permet de donner la valeur trouvée à l'adresse donnée par le pointeur
     // cela va donc aussi afficher la valeur de age
     printf("value at stored adress : %d\n", *pAge);
-
+    printAgeVariable(age);
     // affiche
     printAgePointer(pAge);
 

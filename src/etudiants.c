@@ -21,13 +21,13 @@ void scanEtudiant(struct etudiant *etu)
     printf("Veuillez renseigner le nom de l'etudiant : ");
     scanf("%s", etu -> nom);
     printf("\nVeuillez renseigner son identifiant : ");
-    scanf("%ld", & etu -> identifiant);
+    scanf("%ld", &etu -> identifiant);
     printf("\nVeuillez rentrer sa premiere note : ");
-    scanf("%d", & etu -> notes[0]);
+    scanf("%lf", &etu -> notes[0]);
     printf("\nVeuillez rentrer sa deuxieme note : ");
-    scanf("%d", & etu -> notes[1]);
+    scanf("%lf", &etu -> notes[1]);
     printf("\nVeuillez rentrer sa troisieme note : ");
-    scanf("%d", & etu -> notes[2]);
+    scanf("%lf", &etu -> notes[2]);
 }
 
 // Fonction pour instancier toute une classe ayant un nombre d'élèves donné
@@ -73,13 +73,8 @@ void scanClasseMarqueur(struct etudiant* classe)
 void printEtudiant(struct etudiant etu)
 {
     // Affichage de l'étudiant
-    printf("\nL'etudiant renseigne se nomme %s, son identifiant est %ld, et ses notes sont %d, %d, et %d",
-            etu.nom,
-            etu.identifiant,
-            etu.notes[0],
-            etu.notes[1],
-            etu.notes[2]
-    );
+    printf("\nL'etudiant renseigne se nomme %s, son identifiant est %ld, et ses notes sont %.2f, %.2f, et %.2f\n", 
+           etu.nom, etu.identifiant, etu.notes[0], etu.notes[1], etu.notes[2]);
 }
 
 // Fonction affichant une classe entière
@@ -92,14 +87,38 @@ void printClasse(struct etudiant* classe, int nbEleves)
     }
 }
 
+void printClasseMarqueur(struct etudiant *classe) 
+{
+    // Variables
+    bool fin = false;
+    int i = 0;
+    // On boucle sur toute la classe
+    while (!fin) {
+        // Instanciation de l'étudiant avec scanEtudiant()
+        struct etudiant etu = classe[i];
+        // On vérifie si l'étudiant n'est pas le marqueur
+        if (strcmp(etu.nom, "") == 0 &&
+            etu.identifiant == 0 &&
+            etu.notes[0] == 0 &&
+            etu.notes[1] == 0 &&
+            etu.notes[2] == 0)
+            {
+                fin = true;
+                break;
+            } 
+                
+        // Si la boucle n'est pas finie on ajoute l'étudiant à la classe
+        printEtudiant(etu);
+        i++;
+    }
+}
+
 int main()
 {
     // Déclaration de la classe
-    struct etudiant classe[255];
-    // On saisit les élèves de la classe en finissant par le marqueur
+    struct etudiant classe[20];
     scanClasseMarqueur(classe);
-    // On affiche la classe finie
-    printClasse(classe, nbEleves);
+    printClasseMarqueur(classe);
     // Fin du programme
     return 0;
 }
