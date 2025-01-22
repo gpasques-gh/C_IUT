@@ -2,7 +2,7 @@
 
 void printAgeVariable(int age) {
     printf("You are %d years old", age);
-}
+}   
 
 void printAgePointer(int *pAge) {
     printf("You are %d years old", *pAge); // dereferencing
