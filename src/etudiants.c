@@ -26,7 +26,7 @@ void scanEtudiant(struct etudiant *etu)
     scanf("%lf", &etu -> notes[0]);
     printf("\nVeuillez rentrer sa deuxieme note : ");
     scanf("%lf", &etu -> notes[1]);
-    printf("\nVeuillez rentrer sa troisieme note : ");
+    printf("\nVeuillez rentrer sa troisieme notes : ");
     scanf("%lf", &etu -> notes[2]);
 }
 
