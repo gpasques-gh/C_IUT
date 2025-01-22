@@ -5,17 +5,17 @@
 // Fonction convertissant une chaîne de caractères
 // représentant un entier en une chaîne de caractères
 // représentant une valeur héxadécimale
-int d2h(char * intchar, char * hexa) {
+int d2h(char * intchar, char * hexa)
+{
     // Pointeur pour vérifier le format
     char * ptrFin;
     // On converti la chaîne de base en entier
     long entier = strtol(intchar, &ptrFin, 10);
     // Si le format n'est pas valide
-    if (ptrFin == intchar) {
-        // Fin de la fonction
+    if (ptrFin == intchar)
         printf("Format invalide.");
-        return 0;
-    } else { // Si le format est valide
+    else
+    { // Si le format est valide
         // Variables
         char hx[16] = "0123456789ABCDEF"; // Characters hexadécimaux
         int i = 0; // Indice de la chaine
@@ -25,7 +25,8 @@ int d2h(char * intchar, char * hexa) {
         hexa[i] = hx[reste];
         i++;
         // Tant que l'on peut diviser
-        while (quotient >= 16) {
+        while (quotient >= 16)
+        {
             // On réitère l'opération
             reste = quotient % 16;
             quotient = quotient / 16;
@@ -40,19 +41,21 @@ int d2h(char * intchar, char * hexa) {
         // On sort de la fonction en renvoyant 1
         return 1;
     }
+    // Echec de l'opération
+    return 0;
 }
 
 // Main
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[])
+{
     // Variables
     char* hexa;
     char* chaine = argv[1];
     // Appel de la fonction 
     int resultat = d2h(chaine, hexa);
     // Affichage du résultat si l'opération a réussi
-    if (resultat == 1) {
+    if (resultat == 1)
         printf("%s", hexa);
-    }
     // Fin du programme
     return 0;
 }
