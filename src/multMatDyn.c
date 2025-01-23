@@ -217,6 +217,15 @@ int **multMat(int **mat1, int **mat2, int r1, int c1, int r2, int c2)
     return matRes;
 }
 
+// Fonction pour libérer la mémoire allouée à une matrice
+void libererMemoire(int **mat, int r)
+{
+    // Libération de la mémoire allouée pour les sous-tableaux
+    for (int i = 0; i < r; i++)
+        free(mat[i]);
+    // Libération de la mémoire allouée pour le tableau principal
+    free(mat);
+}
 
 // Fonction principale
 int main(int argc, char const *argv[])
@@ -275,7 +284,11 @@ int main(int argc, char const *argv[])
             // On l'affiche
             printf("Resultat de la multiplication des 2 matrices : \n");
             afficherMatrice(rMult, cMult, multiplication);
-        }       
+            // On libère la mémoire allouée aux matrices
+            libererMemoire(mat1, r1);
+            libererMemoire(mat2, r2);
+            libererMemoire(multiplication, rMult);
+        }
     }
     // Si le nombre d'argument n'est pas le bon
     else
