@@ -109,13 +109,13 @@ bool verifFichier(int r1, int c1, int r2, int c2, FILE *fichier)
                         {
                             if (!token[i] == '-')
                             {
-                                printf("Caractère invalide dans le fichier fourni : %c.", token[i]);
+                                printf("Caractere invalide dans le fichier fourni : %c.\n", token[i]);
                                 return false;
                             }
                         }
                         else
                         {
-                            printf("Caractère invalide dans le fichier fourni : %c.", token[i]);
+                            printf("Caractere invalide dans le fichier fourni : %c.\n", token[i]);
                             return false;
                         }
                         
@@ -151,12 +151,12 @@ bool verifFichier(int r1, int c1, int r2, int c2, FILE *fichier)
             {
                 if (numMat == 1)
                 {
-                    printf("Format des colonnes de la première matrice invalide, i1 : %d, r1 : %d, j1 : %d, c1 : %d.", i1, r1, sj1, c1);
+                    printf("Format des colonnes de la premiere matrice invalide.\n");
                     return false;
                 }
                 else if (numMat == 2)
                 {
-                    printf("Format des colonnes de la deuxième matrice invalide, i2 : %d, r2 : %d, j2 : %d, c2 : %d.", i2, r2, sj2, c2);
+                    printf("Format des colonnes de la deuxieme matrice invalide.\n");
                     return false;
                 }
             }
@@ -169,19 +169,19 @@ bool verifFichier(int r1, int c1, int r2, int c2, FILE *fichier)
         // S'il y a de nouvelles lignes vides après la deuxième matrice
         else
         {
-            printf("Format de fichier invalide, plus de deux matrices.");
+            printf("Format de fichier invalide, plus de deux matrices.\n");
             return false;
         }   
     }
     // Si les lignes ne correspondent pas aux lignes annoncées par l'utlisateur
     if (i1 != r1)
     {
-        printf("Format de la première matrice invalide, i1 : %d, r1 : %d, j1 : %d, c1 : %d.", i1, r1, j1, c1);
+        printf("Format des lignes de la premiere matrice invalide.\n");
         return false;
     }
     if (i2 != r2)
     {
-        printf("Format de la deuxième matrice invalide.");
+        printf("Format des lignes de la deuxieme matrice invalide.\n");
         return false;
     }
     // Fin de la fonction
@@ -232,7 +232,7 @@ int main(int argc, char const *argv[])
         // On vérifie que l'on peut multiplier les matrices
         if (r1 != c2 || c1 != r2)
         {
-            printf("Valeurs incorrectes pour la multiplication de matrices.");
+            printf("Valeurs incorrectes pour la multiplication de matrices.\n");
             exit(EXIT_FAILURE);
         }
         // On va chercher le fichier
@@ -240,13 +240,13 @@ int main(int argc, char const *argv[])
         // Si le fichier n'existe pas
         if (fichier == NULL)
         {
-            printf("Impossible d'ouvrir le fichier.");
+            printf("Impossible d'ouvrir le fichier.\n");
             exit(EXIT_FAILURE);
         }
         // Si le fichier n'est pas valide
         if (!verifFichier(r1, c1, r2, c2, fichier))
         {
-            printf("Fermeture du programme.");
+            printf("Fermeture du programme.\n");
             exit(EXIT_FAILURE);
         }
         // Sinon
