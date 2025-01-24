@@ -214,7 +214,7 @@ Chaine supIndex(Chaine c, int i)
         c = suphead(c);
     }
     // Si l'indice et entre 1 et le nombre d'element moins 1
-    else if (i > 0 && i < listlen(c))
+    else if (i > 0 && i < listlen(c)) 
     {
         // Variables
         int count = 0;
