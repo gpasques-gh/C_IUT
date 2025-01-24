@@ -261,26 +261,82 @@ void print(Chaine c)
     printf("\n");
 }
 
+/* Fonction d'ecriture d'une liste dans un fichier binaire */
+int write(char *filename, Chaine c)
+{
+    // On ouvre ou cree le fichier
+    FILE *file = fopen(filename, "wb");
+    int number;
+
+    // Si le fichier existe
+    if (file != NULL)
+    {
+        // On parcours la liste
+        Maillon *maillon = NULL;
+        maillon = c.head;
+        // Tant que le maillon actuel n'est pas nul
+        while (maillon != NULL)
+        {
+            // On recupere la valeur
+            number = maillon->val;
+            // On la met dans le fichier
+            fwrite(&number, sizeof(int), 1, file);        
+            // On passe au maillon suivant
+            maillon = maillon->suiv;
+        }
+    }
+    else
+    {   // Si le fichier n'existe pas
+        return 0;
+    }
+
+    // On ferme le flux du fichier
+    fclose(file);
+    // Fin de la fonction
+    return 1;
+}
+
+/* Fonction de lecture de fichier binaire et d'insertion des elements dans une liste */
+Chaine read(char *filename, Chaine c)
+{
+    // Ouverture du fichier
+    FILE *file = fopen(filename, "rb");
+    int number;
+
+    // Si le fichier existe
+    if (file != NULL)
+    {
+        // Boucle
+        while(fread(&number, sizeof(int), 1, file) != 0)
+        {
+            // Ajout a la liste
+            c = intail(c, number);
+        }
+    }
+    // On renvoit la liste
+    return c;
+}
+
 /* Fonction principale */
 int main(int argc, char const *argv[])
 {
 
-    // On créé 10 fois une liste de 10 éléments
-    for (int i = 0; i < 10; i++)
+    // On créé une liste chainee
+    Chaine c = init();
+    for (int j = 0; j < 10; j++)
     {
-        Chaine c = init();
-
-        for (int j = 0; j < 10; j++)
-        {
-            c = intail(c, j);
-        }
-        // c = [0][1][2][3][4][5][6][7][8][9]
-
-        // On supprime l'element a l'indice i
-        c = supIndex(c, i);
-        // On affiche la liste
-        print(c);
+        c = intail(c, j);
     }
+
+    // On l'ecrit dans un fichier binaire
+    int i = write("listeBin", c);
+
+    // On cree une autre liste chainee a partir du fichier
+    Chaine c2 = init();
+    c2 = read("listeBin", c2);
+
+    // On l'affiche
+    print(c2);
     
     // Fin du programme
     return 0;
