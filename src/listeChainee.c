@@ -223,7 +223,7 @@ Chaine supIndex(Chaine c, int i)
         // Tant que le maillon n'est pas nul et que nous n'avons pas depasse l'indice
         while (m != NULL && count < i - 1)
         {
-            // On passe au maillon suivant
+            // On passe ssau maillon suivant
             m = m->suiv;
             count++;
         }
