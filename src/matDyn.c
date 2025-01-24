@@ -130,7 +130,7 @@ bool verifFichier(int r, int c, FILE *fichier)
         // S'il y a une ligne vide
         else
         {
-            printf("Format de fichier invalide, ligne vide trouvée.\n");
+            printf("Format de fichier invalide, ligne vide trouvee.\n");
             return false;
         }
     }
