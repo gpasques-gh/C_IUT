@@ -2,13 +2,15 @@
 #include <stdlib.h>
 
 /* Structure de maillon de chaine */
-typedef struct maillon {
+typedef struct maillon
+{
     int val;
     struct maillon *suiv;
 } Maillon;
 
 /* Structure de chaine */
-typedef struct chaine {
+typedef struct chaine
+{
     Maillon *head;
 } Chaine;
 
@@ -20,6 +22,35 @@ Chaine init()
     return c;
 }
 
+/* Fonction pour compter le nombre d'elements d'une liste */
+int listlen(Chaine c)
+{
+    // Si la liste n'est pas vide
+    if (c.head != NULL)
+    {
+        // Variables
+        int count = 0;
+        Maillon *m = c.head;
+
+        // Tant que le maillon n'est pas nul
+        while (m != NULL)
+        {
+            // On passe au maillon suivant
+            m = m->suiv;
+            count++;
+        }
+
+        // On renvoit le nombre d'elements
+        return count;
+    }
+    // Si la liste est vide
+    else
+    {
+        // On renvoit -1
+        return -1;
+    }
+}
+
 /* Fonction d'ajout en tete de chaine*/
 Chaine inhead(Chaine c, int v)
 {
@@ -29,8 +60,8 @@ Chaine inhead(Chaine c, int v)
         // On alloue la mémoire
         c.head = malloc(sizeof(Maillon));
         // On ajoute la valeur et le maillon suivant
-        c.head -> val = v;
-        c.head -> suiv = NULL;
+        c.head->val = v;
+        c.head->suiv = NULL;
     }
     // Sinon
     else
@@ -38,8 +69,8 @@ Chaine inhead(Chaine c, int v)
         // On alloue la mémoire pour le nouveau maillon
         Maillon *m = malloc(sizeof(Maillon));
         // On lui passe la valeur et le maillon suivant
-        m -> val = v;
-        m -> suiv = c.head;
+        m->val = v;
+        m->suiv = c.head;
         // On change la tête de liste
         c.head = m;
     }
@@ -56,23 +87,23 @@ Chaine intail(Chaine c, int v)
         // On alloue la mémoire
         c.head = malloc(sizeof(Maillon));
         // On ajoute la valeur et le maillon suivant
-        c.head -> val = v;
-        c.head -> suiv = NULL;
+        c.head->val = v;
+        c.head->suiv = NULL;
     }
     // Sinon
     else
     {
         Maillon *m = c.head;
-        while (m -> suiv != NULL)
+        while (m->suiv != NULL)
         {
-            m = m -> suiv;
+            m = m->suiv;
         }
-        
+
         // On alloue la mémoire pour le maillon suivant
-        m -> suiv = malloc(sizeof(Maillon));
+        m->suiv = malloc(sizeof(Maillon));
         // On lui donne sa valeur et son maillon suivant (NULL)
-        m -> suiv -> val = v;
-        m -> suiv -> suiv = NULL;
+        m->suiv->val = v;
+        m->suiv->suiv = NULL;
     }
 
     return c;
@@ -85,7 +116,7 @@ Chaine suphead(Chaine c)
     if (c.head != NULL)
     {
         // On recupere le maillon suivant de la tete
-        Maillon *m = c.head -> suiv;
+        Maillon *m = c.head->suiv;
         // On libere la memoire
         free(c.head);
         // On change la tete de liste pour le maillon suivant
@@ -99,7 +130,6 @@ Chaine suphead(Chaine c)
 /* Fonction de suppression en queue de liste */
 Chaine suptail(Chaine c)
 {
-    
 
     // Si la liste n'est pas vide
     if (c.head != NULL)
@@ -108,17 +138,108 @@ Chaine suptail(Chaine c)
         Maillon *actuel = c.head;
 
         // Tant que le maillon suivant au maillon actuel n'est pas la queue de liste
-        while (actuel -> suiv -> suiv != NULL)
+        while (actuel->suiv->suiv != NULL)
         {
             // On passe au maillon suivant
-            actuel = actuel -> suiv;
+            actuel = actuel->suiv;
         }
 
         // On libere la memoire de la queue de liste
-        free(actuel -> suiv);
-        actuel -> suiv = NULL;
+        free(actuel->suiv);
+        actuel->suiv = NULL;
     }
 
+    // On renvoit la liste
+    return c;
+}
+
+/* Fonction d'ajout dans une liste avec indice donne */
+Chaine inIndex(Chaine c, int i, int v)
+{
+    // Variables
+    int count = 0;
+    Maillon *m = c.head;
+
+    // Si la liste est vide
+    if (c.head == NULL)
+    {
+        // On alloue la mémoire
+        c.head = malloc(sizeof(Maillon));
+        // On ajoute la valeur et le maillon suivant
+        c.head->val = v;
+        c.head->suiv = NULL;
+
+        return c;
+    }
+
+    // Si l'indice est au dessus de 0
+    if (i > 0)
+    {
+        // Tant que le maillon n'est pas nul et que l'on est avant l'indice
+        while (m != NULL && count < i - 1)
+        {
+            // On passe au maillon suivant
+            m = m->suiv;
+            count++;
+        }
+
+        // Si le maillon n'est pas nul
+        if (m != NULL)
+        {
+            // On recupere le maillon suivant
+            Maillon *mSuiv = m->suiv;
+            // On alloue de la mémoire pour le nouveau maillon
+            m->suiv = malloc(sizeof(Maillon));
+            // On lui donne sa valeur et son maillon suivant
+            m->suiv->val = v;
+            m->suiv->suiv = mSuiv;
+        }
+    }
+    // Si l'indice est 0
+    else if (i == 0)
+    {
+        // On ajoute en tete de liste
+        c = inhead(c, v);
+    }
+    // On renvoit la liste
+    return c;
+}
+
+Chaine supIndex(Chaine c, int i)
+{
+    // Si l'indice est 0
+    if (i == 0)
+    {
+        // On supprime la tete de liste
+        c = suphead(c);
+    }
+    // Si l'indice et entre 1 et le nombre d'element moins 1
+    else if (i > 0 && i < listlen(c))
+    {
+        // Variables
+        int count = 0;
+        Maillon *m = c.head;
+
+        // Tant que le maillon n'est pas nul et que nous n'avons pas depasse l'indice
+        while (m != NULL && count < i - 1)
+        {
+            // On passe au maillon suivant
+            m = m->suiv;
+            count++;
+        }
+
+        // Si le maillon n'est pas nul
+        if (m != NULL)
+        {
+            // On recupere le maillon 2 places en avant
+            Maillon *mSuiv = m->suiv->suiv;
+            // On libere la memoire du maillon suivant
+            free(m->suiv);
+            // On le passe au maillon 2 places en avant
+            m->suiv = NULL;
+            m->suiv = mSuiv;
+        }
+    }
     // On renvoit la liste
     return c;
 }
@@ -133,21 +254,34 @@ void print(Chaine c)
     while (maillon != NULL)
     {
         // On affiche la maillon dans ce format : [ maillon ]
-        printf("[%d] ", maillon -> val);
+        printf("[%d] ", maillon->val);
         // On passe au maillon suivant
-        maillon = maillon -> suiv;
+        maillon = maillon->suiv;
     }
+    printf("\n");
 }
 
 /* Fonction principale */
 int main(int argc, char const *argv[])
 {
-    Chaine c = init();
+
+    // On créé 10 fois une liste de 10 éléments
     for (int i = 0; i < 10; i++)
     {
-        c = intail(c, i);
+        Chaine c = init();
+
+        for (int j = 0; j < 10; j++)
+        {
+            c = intail(c, j);
+        }
+        // c = [0][1][2][3][4][5][6][7][8][9]
+
+        // On supprime l'element a l'indice i
+        c = supIndex(c, i);
+        // On affiche la liste
+        print(c);
     }
-    //print(c); // Devrait afficher [ 2 ] [ 1 ]
-    print(c);
+    
+    // Fin du programme
     return 0;
 }
