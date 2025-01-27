@@ -24,18 +24,28 @@ void swapAdd(int *a, int *b)
     *a = *a - *b;
 }
 
+void swapAddresses(int **a, int **b) 
+{
+    int** c = a;
+    a = b;
+    b = c;
+}
+
 void main()
 {
     // Variables
     int a, b;
     a = 4;
     b = 1;
+    int* ptrA = &a;
+    int* ptrB = &b;
 
     // Echange des valeurs
-    swapTemp(&a, &b);
-    swapXor(&a, &b);
-    swapAdd(&a, &b);
+    swapAddresses(&ptrA, &ptrB);
+    
+    
+
 
     // Affichage du résultat
-    printf("a = %d\nb = %d\n", a, b);
+    printf("a = %d\nb = %d\n", *ptrA, *ptrB);
 }
