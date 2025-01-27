@@ -6,7 +6,6 @@
 int main(int argc, char const *argv[])
 {
     int process = atoi(argv[1]);
-    printf("%d\n", process);
     for (int i = 0; i < 3; i++)
     {
         kill(process, SIGINT);
