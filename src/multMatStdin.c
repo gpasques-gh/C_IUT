@@ -2,6 +2,20 @@
 #include <stdlib.h>
 #include <string.h>
 
+/* Fonction affichant une matrice */
+void printMat(int **mat, int r, int c)
+{
+    for (int i = 0; i < r; i++)
+    {
+        for (int j = 0; j < c; j++)
+        {
+            printf("%d ", mat[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+/* Fonction principale */
 int main(int argc, char const *argv[])
 {
     int r1 = atol(argv[1]);
@@ -14,16 +28,16 @@ int main(int argc, char const *argv[])
     char buffer[256];
     char *sep = " ";
 
-    int **mat1 = (int **)malloc(sizeof(int *) * r1);
+    int **mat1 = malloc(sizeof(int *) * r1);
     for (int i = 0; i < r1; i++)
     {
-        mat1[i] = (int *)malloc(sizeof(int) * c1);
+        mat1[i] = malloc(sizeof(int) * c1);
     }
 
-    int **mat2 = (int **)malloc(sizeof(int *) * r2);
+    int **mat2 = malloc(sizeof(int *) * r2);
     for (int i = 0; i < r2; i++)
     {
-        mat2[i] = (int *)malloc(sizeof(int) * c2);
+        mat2[i] = malloc(sizeof(int) * c2);
     }
 
     int lines = 0;
@@ -59,10 +73,10 @@ int main(int argc, char const *argv[])
         
     }
 
-    int **matMult = (int **)malloc(sizeof(int *) * r1);
+    int **matMult = malloc(sizeof(int *) * r1);
     for (int i = 0; i < r1; i++)
     {
-        matMult[i] = (int *)malloc(sizeof(int) * c2);
+        matMult[i] = malloc(sizeof(int) * c2);
     }
 
     for (int i = 0; i < r1; i++)
@@ -76,31 +90,12 @@ int main(int argc, char const *argv[])
         }
     }
 
-    for (int i = 0; i < r1; i++)
-    {
-        for (int j = 0; j < c1; j++)
-        {
-            printf("%d ", mat1[i][j]);
-        }
-        printf("\n");
-    }
+    printf("Premiere matrice :\n");
+    printMat(mat1, r1, c1);
+    printf("Deuxieme matrice :\n");
+    printMat(mat2, r2, c2);
+    printf("Resultat de la multiplication des 2 matrices :\n");
+    printMat(matMult, r1, c2);
     
-    for (int i = 0; i < r2; i++)
-    {
-        for (int j = 0; j < c2; j++)
-        {
-            printf("%d ", mat2[i][j]);
-        }
-        printf("\n");
-    }
-
-    for (int i = 0; i < r1; i++)
-    {
-        for (int j = 0; j < c2; j++)
-        {
-            printf("%d ", matMult[i][j]);
-        }
-        printf("\n");
-    }
     return 0;
 }
