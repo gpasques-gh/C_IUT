@@ -18,30 +18,30 @@ void printMat(int **mat, int r, int c)
 /* Fonction principale */
 int main(int argc, char const *argv[])
 {
+    // Variables
     int r1 = atol(argv[1]);
     int c1 = atol(argv[2]);
     int r2 = atol(argv[3]);
     int c2 = atol(argv[4]);
-
-    int count = 0;
     int numMat = 1;
     char buffer[256];
     char *sep = " ";
+    int lines = 0;
+    int rows;
 
+    // Creation des matrices
     int **mat1 = malloc(sizeof(int *) * r1);
     for (int i = 0; i < r1; i++)
     {
         mat1[i] = malloc(sizeof(int) * c1);
     }
-
     int **mat2 = malloc(sizeof(int *) * r2);
     for (int i = 0; i < r2; i++)
     {
         mat2[i] = malloc(sizeof(int) * c2);
     }
 
-    int lines = 0;
-    int rows;
+    // Chargement des matrices
     while (scanf("%99[^\n]", buffer) != EOF)
     {
         getchar();
@@ -54,7 +54,6 @@ int main(int argc, char const *argv[])
         {
             rows = 0;
             char *token = strtok(buffer, sep);
-
             while (token != NULL)
             {
                 if (numMat == 1)
@@ -70,15 +69,16 @@ int main(int argc, char const *argv[])
             }
             lines++;
         }
-        
     }
 
+    // Creation de la matrice de multiplcation
     int **matMult = malloc(sizeof(int *) * r1);
     for (int i = 0; i < r1; i++)
     {
         matMult[i] = malloc(sizeof(int) * c2);
     }
 
+    // Multiplication des deux matrices
     for (int i = 0; i < r1; i++)
     {
         for (int j = 0; j < c2; j++)
@@ -90,12 +90,13 @@ int main(int argc, char const *argv[])
         }
     }
 
+    // Affichage des resultats du programme
     printf("Premiere matrice :\n");
     printMat(mat1, r1, c1);
     printf("Deuxieme matrice :\n");
     printMat(mat2, r2, c2);
     printf("Resultat de la multiplication des 2 matrices :\n");
     printMat(matMult, r1, c2);
-    
+
     return 0;
 }
