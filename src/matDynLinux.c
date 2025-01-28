@@ -18,11 +18,10 @@ int main(int argc, char *argv[])
     i = 0;
     while(scanf("%99[^\n]", buffer) != EOF)
     {
-        // On retire le \n
         getchar();
-        // On initialise j à 0
+
         j = 0;
-        // On déclare le token sur le buffer
+        
         char *strToken = strtok(buffer, separators);
         // Boucles sur les éléments de la ligne
         while (strToken != NULL) {

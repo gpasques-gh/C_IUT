@@ -317,13 +317,36 @@ Chaine read(char *filename, Chaine c)
     return c;
 }
 
+/* Fonction permettant de recuperer une valeur a un indice precis */
+Maillon* getindex(Chaine c, int i)
+{
+    // Si l'indice est 0 on renvoit la tete de liste
+    if (i == 0 && c.head != NULL)
+        return c.head;
+    // Si l'indice et entre 1 et le nombre d'element moins 1
+    else if (i > 0 && i < listlen(c) && c.head != NULL)
+    {
+        int count = 0;
+        Maillon *m = c.head;
+
+        // Tant que le maillon n'est pas nul et que nous n'avons pas depasse l'indice
+        while (m != NULL && count < i - 1)
+        {
+            m = m->suiv;
+            count++;
+        }
+
+        return m;
+    }
+}
+
 /* Fonction principale */
 int main(int argc, char const *argv[])
 {
 
     // On créé une liste chainee
     Chaine c = init();
-    for (int j = 0; j < 10; j++)
+    for (int j = 0; j < 20; j++)
     {
         c = intail(c, j);
     }
@@ -334,10 +357,11 @@ int main(int argc, char const *argv[])
     // On cree une autre liste chainee a partir du fichier
     Chaine c2 = init();
     c2 = read("listeBin", c2);
+    
 
     // On l'affiche
     print(c2);
-    
+
     // Fin du programme
     return 0;
 }
