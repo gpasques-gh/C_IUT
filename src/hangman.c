@@ -18,18 +18,38 @@ dP     dP  `88888P8 dP    dP `8888P88 dP  dP  dP `88888P8 dP    dP \n\
                               d8888P                               \n\n"
 
 /* Main program */
-int main(int argc, char const *argv[])
+int main(int argc, char *argv[])
 {
+
+    if (argc != 2)
+    {
+        printf("Please insert the path to your dictionnary.\n");
+        return 1;
+    }
+
+    char* dico = argv[1];
+    FILE* dico_file = fopen(dico, "r");
+
+    if (dico_file == NULL)
+    {
+        printf("Dictionnary not found.\n");
+        return 1;
+    }
+
+    /* Random number in the range of 0 to n lines */
     srand(time(NULL));
-    char cmd_lines[] = "wc -l src/dico.txt";
+    char cmd_lines[256];
+    snprintf(cmd_lines, 255, "wc -l %s", dico);
     char str_lines[256];
-    char word[256];
-    char cmd[256];
     FILE* stream_lines = popen(cmd_lines, "r");
     fgets(str_lines, 255, stream_lines);
     int lines = atoi(str_lines);
-    int i = rand() % (lines + 0 + 1) + 0;
-    snprintf(cmd, 255, "sed '%d!d' src/dico.txt", i);
+    int rnd = rand() % (lines + 0 + 1) + 0;
+
+    /* Random word from these lines */
+    char word[256];
+    char cmd[256];    
+    snprintf(cmd, 255, "sed '%d!d' %s", rnd, dico);
     FILE* stream_word = popen(cmd, "r");
     fgets(word, 255, stream_word);
     word[strcspn(word, "\n")] = 0;
@@ -38,12 +58,13 @@ int main(int argc, char const *argv[])
         word[i] = toupper(word[i]);
     }
 
-
     /* Variables */
     char rev_word[256];
     char valid_letters[letters];
+    char invalid_letters[letters];
 
     int n_valid_letters = 0;
+    int n_invalid_letters = 0;
     int valid;
     int tries = 6;
 
@@ -60,8 +81,6 @@ int main(int argc, char const *argv[])
         }
     }
 
-    
-
     printf("%s", logo);
 
     /* Game loop */
@@ -70,34 +89,89 @@ int main(int argc, char const *argv[])
         valid = 0;
     
         printf("Here is the word you have to guess : %s\n", rev_word);
+        if (n_invalid_letters > 0)
+        {
+            printf("Here is the wrong letters you already tried : ");
+            for (int i = 0; i < n_invalid_letters; i++)
+            {
+                if (i == n_invalid_letters - 1)
+                {
+                    printf("%c", invalid_letters[i]);
+                }
+                else
+                {
+                    printf("%c, ", invalid_letters[i]);
+                } 
+            }
+            printf("\n");
+        }
+        
+
         printf("Make your guess (%d tries left) : ", tries);
+
         scanf(" %c", &answer);
         answer = toupper(answer);
+
+        int tested = 0;
 
         /* Checking for the validity of the letters */
         for (int i = 0; i < strlen(word); i++)
         {
             if (word[i] == answer)
             {
-                for (int j = 0; j <= n_valid_letters; j++)
+                if (tested == 0)
                 {
-                    if (valid_letters[j] == answer)
+                    for (int j = 0; j <= n_valid_letters; j++)
                     {
-                        printf("You already placed that letter.\n");
-                        break;
+                        if (valid_letters[j] == answer)
+                        {
+                            printf("You already placed that letter.\n");
+                            tested = 1;
+                            break;
+                        }
                     }
                 }
+            
                 valid_letters[n_valid_letters] = answer;
+                n_valid_letters++;
+                valid = 1;                
                 rev_word[i] = answer;
                 printf("Well done!\n");
                 valid = 1;
             }
         }
 
+        stop:
+
         if (valid == 0)
         {
             tries--;
-            printf("Wrong letter...\n");
+            int i = 0;
+            if (n_invalid_letters == 0)
+            {
+                invalid_letters[0] = answer;
+                n_invalid_letters++;
+                printf("Wrong letter...\n");
+            }
+            else
+            {
+                while(answer != invalid_letters[i] && i <= n_invalid_letters)
+                {
+                    i++;
+                }
+
+                if (answer == invalid_letters[i])
+                {
+                    printf("You already tried that letter...\n");
+                }
+                else
+                {
+                    invalid_letters[n_invalid_letters] = answer;
+                    n_invalid_letters++;
+                    printf("Wrong letter...\n");
+                }
+            }
+            
         }
     }
 
