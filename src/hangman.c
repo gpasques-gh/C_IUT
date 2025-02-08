@@ -3,11 +3,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <time.h>
 
 /* Defines */
-#define word_len 7
 #define letters 26
-#define word "BONJOUR"
 #define logo "\n\
 dP     dP                                                          \n\
 88     88                                                          \n\
@@ -21,8 +20,27 @@ dP     dP  `88888P8 dP    dP `8888P88 dP  dP  dP `88888P8 dP    dP \n\
 /* Main program */
 int main(int argc, char const *argv[])
 {
+    srand(time(NULL));
+    char cmd_lines[] = "wc -l src/dico.txt";
+    char str_lines[256];
+    char word[256];
+    char cmd[256];
+    FILE* stream_lines = popen(cmd_lines, "r");
+    fgets(str_lines, 255, stream_lines);
+    int lines = atoi(str_lines);
+    int i = rand() % (lines + 0 + 1) + 0;
+    snprintf(cmd, 255, "sed '%d!d' src/dico.txt", i);
+    FILE* stream_word = popen(cmd, "r");
+    fgets(word, 255, stream_word);
+    word[strcspn(word, "\n")] = 0;
+    for (int i = 0; i < strlen(word); i++)
+    {
+        word[i] = toupper(word[i]);
+    }
+
+
     /* Variables */
-    char rev_word[word_len];
+    char rev_word[256];
     char valid_letters[letters];
 
     int n_valid_letters = 0;
@@ -32,25 +50,32 @@ int main(int argc, char const *argv[])
     char answer;
 
     /* Filling the revealed word with underscores */
-    for (int i = 0; i < word_len; i++)
+    for (int i = 0; i < strlen(word); i++)
     {
         rev_word[i] = '_';
+
+        if (i == strlen(word) - 1)
+        {
+            rev_word[i + 1] = '\0';
+        }
     }
+
+    
 
     printf("%s", logo);
 
     /* Game loop */
     while(strcmp(word, rev_word) != 0 && tries > 0)
     {
-        valid = 0; 
-
+        valid = 0;
+    
         printf("Here is the word you have to guess : %s\n", rev_word);
         printf("Make your guess (%d tries left) : ", tries);
         scanf(" %c", &answer);
         answer = toupper(answer);
 
         /* Checking for the validity of the letters */
-        for (int i = 0; i < word_len; i++)
+        for (int i = 0; i < strlen(word); i++)
         {
             if (word[i] == answer)
             {
@@ -79,7 +104,7 @@ int main(int argc, char const *argv[])
     /* Losing */
     if (tries == 0)
     {
-        printf("You lose...\n");
+        printf("You lose... The word was %s\n", word);
         return 0;
     }
 
