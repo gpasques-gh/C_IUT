@@ -33,6 +33,7 @@ void sig_handling(int s)
 
 int main(int argc, char const *argv[])
 {
+    
     signal(SIGUSR1, sig_handling);
     signal(SIGUSR2, sig_handling);
     while(1){}
