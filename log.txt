@@ -1,0 +1,10 @@
+Signal SIGUSR2 recu le 10/1/125 a 18:9:35.
+Signal SIGUSR1 recu le 10/1/125 a 18:12:5.
+Signal SIGUSR1 recu le 10/1/125 a 18:12:8.
+Signal SIGUSR1 recu le 10/1/125 a 18:12:9.
+Signal SIGUSR1 recu le 10/1/125 a 18:12:9.
+Signal SIGUSR1 recu le 10/1/125 a 18:12:10.
+Signal SIGUSR2 recu le 10/1/125 a 18:12:12.
+Signal SIGUSR2 recu le 10/1/125 a 18:12:13.
+Signal SIGUSR2 recu le 10/1/125 a 18:12:13.
+Signal SIGUSR2 recu le 10/1/125 a 18:12:14.
