@@ -141,8 +141,6 @@ int main(int argc, char *argv[])
             }
         }
 
-        stop:
-
         if (valid == 0)
         {
             tries--;
