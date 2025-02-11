@@ -27,12 +27,10 @@ void sig_handling(int s)
     }
 
     fprintf(log, "Signal %s recu le %d/%d/%d a %d:%d:%d.\n", str_sig,
-        tm.tm_mday, tm.tm_mon, tm.tm_year,
-        tm.tm_hour, tm.tm_min, tm.tm_sec);
+        tm.tm_mday, tm.tm_mon, tm.tm_year, tm.tm_hour, tm.tm_min, tm.tm_sec);
     
-    printf("Signal %s recu le %d/%d/%d a %d:%d:%d.\n", str_sig,
-        tm.tm_mday, tm.tm_mon, tm.tm_year,
-        tm.tm_hour, tm.tm_min, tm.tm_sec);
+    printf("Signal %s recu le %d/%d/%d a %d:%d:%d.\n", str_sig, 
+        tm.tm_mday, tm.tm_mon, tm.tm_year, tm.tm_hour, tm.tm_min, tm.tm_sec);
 
     fclose(log);
 }
