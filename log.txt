@@ -1,6 +1,4 @@
-Signal SIGUSR1 recu le 10/1/125 a 18:48:6.
-Signal SIGUSR1 recu le 10/1/125 a 18:48:8.
-Signal SIGUSR2 recu le 10/1/125 a 18:48:24.
-Signal SIGUSR2 recu le 10/1/125 a 18:48:27.
-Signal SIGUSR1 recu le 11/1/125 a 10:9:31.
-Signal SIGUSR2 recu le 11/1/125 a 10:9:35.
+SIGUSR1,12/1/125,16:34:24
+SIGUSR2,12/1/125,16:34:28
+SIGUSR1,12/1/125,16:48:1
+SIGUSR2,12/1/125,16:48:4
